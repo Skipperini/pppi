@@ -12,8 +12,7 @@ class Program
 
         Thread thread2 = new Thread(new ThreadStart(Func2));
         thread2.Start();
-        
-
+       
 
         Task<int> task = Func3Async();
 
