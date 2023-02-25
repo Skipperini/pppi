@@ -1,0 +1,84 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+       
+        Thread thread1 = new Thread(new ThreadStart(Func1));
+        thread1.Start();
+
+        Thread thread2 = new Thread(new ThreadStart(Func2));
+        thread2.Start();
+        
+
+
+        Task<int> task = Func3Async();
+
+
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine($"Main thread executing ({i})");
+            Thread.Sleep(1000);
+        }
+
+
+        int sum = task.Result;
+        Console.WriteLine($"Func3Async returned {sum}.");
+
+    }
+
+    static void Func1()
+    {
+        using (StreamWriter sw = new StreamWriter("numbers.txt"))
+        {
+            Random r = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine($"FUNC 1 executing ({i})");
+                int randomNumber = r.Next(1, 101); 
+                sw.WriteLine(randomNumber);
+                Thread.Sleep(2000);
+            }
+            Console.WriteLine("END FUNC 1");
+        }
+    }
+
+    public static void Func2()
+    {
+        string[] randomStrings = new string[5];
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine($"FUNC 2 executing ({i})");
+            char[] stringChars = new char[10]; 
+            for (int j = 0; j < stringChars.Length; j++)
+            {
+                stringChars[j] = chars[random.Next(chars.Length)];
+                Thread.Sleep(300);
+            }
+            randomStrings[i] = new String(stringChars);
+        }
+        string res = string.Join(", ", randomStrings);
+        Console.WriteLine("END FUNC 2");
+        Console.WriteLine(res);
+    }
+
+    static async Task<int> Func3Async()
+    {
+        int sum = 0;
+
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine($"FUNC 3 executing (async) ({i})");
+            await Task.Delay(2500);
+            sum += i;
+        }
+        Console.WriteLine("END FUNC 3");
+        return sum;
+    }
+}
