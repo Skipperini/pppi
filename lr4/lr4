@@ -1,0 +1,85 @@
+using System;
+using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+class Program
+{
+    static void Main()
+    {
+        
+
+        Cat cat1 = new Cat("Tom", 4, "American Bobtail", "male", 5.3f);
+        Type cat1Type = cat1.GetType();
+        Console.WriteLine($"Class name: {cat1Type.Name}");
+        Console.WriteLine();
+
+        TypeInfo cat1TypeInfo = cat1Type.GetTypeInfo();
+        Console.WriteLine($"Methods: {cat1TypeInfo.DeclaredMethods.Count()}");
+        Console.WriteLine($"Fields: {cat1TypeInfo.DeclaredFields.Count()}");
+
+
+        Console.WriteLine();
+        MemberInfo[] members = cat1Type.GetMembers();
+        Console.WriteLine("All members Cat class:");
+        foreach (MemberInfo member in members)
+        {
+            Console.WriteLine("{0} ({1})", member.Name, member.MemberType);
+        }
+
+        Console.WriteLine();
+        FieldInfo privateField1 = cat1Type.GetField("name", BindingFlags.NonPublic | BindingFlags.Instance);
+        Console.WriteLine("Private field 1: {0}", privateField1);
+
+        FieldInfo privateField2 = cat1Type.GetField("age", BindingFlags.NonPublic | BindingFlags.Instance);
+        Console.WriteLine("Private field 2: {0}", privateField2);
+
+        Console.WriteLine();
+        MethodInfo methodInfo = typeof(Cat).GetMethod("DailyFoodIntake");
+        var result = methodInfo.Invoke(cat1, null);
+        Console.WriteLine(result);
+
+
+
+    }
+}
+public class Cat
+{
+
+    private string name;
+    private int age;
+
+    public string breed;
+    public string gender;
+    public float weight;
+
+    public Cat() { }
+    public Cat(string name, int age, string breed, string gender, float weight)
+    {
+        this.name = name;
+        this.age = age;
+        this.breed = breed;
+        this.gender = gender;
+        this.weight = weight;
+    }
+
+
+    public string GetName()
+    {
+        return name;
+    }
+
+
+    public int GetAge()
+    {
+        return age;
+    }
+
+  
+    public double DailyFoodIntake()
+    {
+        double foodIntake = 0.02 * weight;
+        Console.WriteLine(this.name + " daily food intake: "+ (float)Math.Round(foodIntake, 3) +" g");
+        return foodIntake;
+    }
+   
+}
