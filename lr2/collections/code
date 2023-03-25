@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+
+        Item item1 = new Item("Cheese", 45.50);
+        Item item2 = new Item("Milk", 22.50);
+        Item item3 = new Item("Apple", 12.99);
+
+
+        List<Item> items = new List<Item>();
+
+        items.Add(item1);
+        items.Add(item2);
+        items.Add(item3);
+
+
+        Console.WriteLine("Товари:");
+        for (int i = 0; i < items.Count; i++)
+        {
+            Console.WriteLine("Код товару: " + i);
+            Console.WriteLine("Назва: " + items[i].Name);
+            Console.WriteLine("Ціна: " + items[i].Price);
+            Console.WriteLine();
+        }
+
+
+        Console.ReadLine();
+    }
+}
+
+
+class Item
+{
+    public string Name { get; set; }
+    public double Price { get; set; }
+
+
+    public Item(string name, double price)
+    {
+        Name = name;
+        Price = price;
+
+    }
+}
