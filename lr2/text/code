@@ -1,0 +1,19 @@
+using System;
+using System.Text;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+
+        string str = "Hello, World!";
+
+
+        byte[] bytes = Encoding.UTF8.GetBytes(str);
+        Console.WriteLine("Байти: {0}", BitConverter.ToString(bytes));
+
+
+        string str2 = Encoding.UTF8.GetString(bytes);
+        Console.WriteLine("РЯдок: {0}", str2);
+    }
+}
