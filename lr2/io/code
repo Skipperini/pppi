@@ -1,0 +1,30 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        string inputFilePath = "D:\\lr\\input.txt";
+        string outputFilePath = "D:\\lr\\output.txt";
+
+        using (StreamReader reader = new StreamReader(inputFilePath))
+        {
+  
+            using (StreamWriter writer = new StreamWriter(outputFilePath))
+            {
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+ 
+                    string processedLine = line.ToUpper();
+                    writer.WriteLine(processedLine);
+                }
+            }
+        }
+
+        Console.WriteLine("file was successfully processed and written");
+        Console.ReadKey();
+    }
+}
